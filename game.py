@@ -1,15 +1,22 @@
 # TIC TAC TOE GAME
 
 # Displaying the game board's UI
+from IPython.display import clear_output
+
 def display_board(board):
-    print('\n'*100)
-    print(board[1] + "|" + board[2] + "|" + board[3])
-    print("-|-|-")
-    print(board[4] + "|" + board[5] + "|" + board[6])
-    print("-|-|-")
-    print(board[7] + "|" + board[8] + "|" + board[9])
-    print("-|-|-")
-    return board
+    print('\n'*100)  # Remember, this only works in jupyter!
+    
+    print('   |   |')
+    print(' ' + board[7] + ' | ' + board[8] + ' | ' + board[9])
+    print('   |   |')
+    print('-----------')
+    print('   |   |')
+    print(' ' + board[4] + ' | ' + board[5] + ' | ' + board[6])
+    print('   |   |')
+    print('-----------')
+    print('   |   |')
+    print(' ' + board[1] + ' | ' + board[2] + ' | ' + board[3])
+    print('   |   |')
 
 
 
@@ -20,48 +27,44 @@ display_board(test_board)
 
 # Asking the user to choose a marker
 def player_input():
-    prefrence="hello world"
-    while prefrence not in ("X", "O"):
-        prefrence=input("Hey! Do you want to be X or O? Enter either X or O: ")
-        if prefrence not in ("X", "O"):
-            print("Please choose from X or O")
-            
-        player1=prefrence
-        if player1=="X":
-            player2="O"
-        else:
-            player2="X"
-    return player1,player2
+    marker = ''
+    
+    while not (marker == 'X' or marker == 'O'):
+        marker = input('Player 1: Do you want to be X or O? ').upper()
+
+    if marker == 'X':
+        return ('X', 'O')
+    else:
+        return ('O', 'X')
 
 
 player_input()
 
 # Asking the player to choose a position, Asking to choose where the user want to place his marker
-def answer():
-    choose_positions="hello world"
-    while choose_positions not in range(0,10):
-        choose_positions= int(input(" Please choose a position from 1-9: "))
+# def answer():
+#     choose_positions="hello world"
+#     while choose_positions not in range(0,10):
+#         choose_positions= int(input(" Please choose a position from 1-9: "))
 
-        if choose_positions not in range(0,10):
-            print("Please enterr a numberr between 1-9!")
-    return choose_positions
+#         if choose_positions not in range(0,10):
+#             print("Please enterr a numberr between 1-9!")
+#     return choose_positions
 
-# Taking in the positon and the marker as input and displaying the updated board
-answer()
+# # Taking in the positon and the marker as input and displaying the updated board
+# answer()
 
-def place_marker(marker,board,position):
+def place_marker(board, marker, position):
+    board[position] = marker
+
     
-    board[position]=marker
-
-    
 
 
-
-place_marker('$',test_board,8)
-print(display_board(test_board))
+place_marker(test_board,'$',8)
+display_board(test_board)
 
 # Checking if someone has won the game or not
 def win_check(board,mark):
+    
     return ((board[7] == mark and board[8] == mark and board[9] == mark) or # across the top
     (board[4] == mark and board[5] == mark and board[6] == mark) or # across the middle
     (board[1] == mark and board[2] == mark and board[3] == mark) or # across the bottom
@@ -123,9 +126,9 @@ while True:
     turn = choose_first()
     print(turn + ' will go first.')
     
-    play_game = input('Are you ready to play? Enter y or n.')
+    play_game = input('Are you ready to play? Enter Yes or No.')
     
-    if play_game== 'y':
+    if play_game.lower()[0] == 'y':
         game_on = True
     else:
         game_on = False
